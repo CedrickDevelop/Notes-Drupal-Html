@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <script src="https://kit.fontawesome.com/19d905bb9a.js" crossorigin="anonymous"></script>
+
+    <title>Les menus</title>
+</head>
+<body>
+
+     <a href="../../../index.html"> <button type="button" class="btn btn-success"><i class="fas fa-home"></i></button></a>
+
+    <h1>Le Render_Array</h1>
+
+
+    <article>
+        <h2> Les hook pour le render_array</h2>
+        
+        <h3>Dans le fichier ".module" ou ".theme"</h3>
+        <a href="https://www.drupal.org/docs/drupal-apis/render-api/render-arrays">lien officiel drupal render array</a>
+        <p>Si dans les hook on applique un render array avec un nom particulier, par exemple <strong>render array ["search_result"]</strong>  , drupal ira chercher une page ayant le nom <strong>search_result</strong> pour l'affichage du rendu.
+        </p>
+         <img src="images/render_array.png" alt="">
+         
+        <br>
+
+        <h3>Le hook_theme</h3>
+        <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Render%21theme.api.php/function/hook_theme/8.2.x">lien officiel drupal hook_theme</a>
+        <p>Le hook_theme est une partie de code qui definira comment doit etre rendu les variables. Il est actionné juste avant l'ouuverture du template</p>
+        <p>On peut ainsi declarer un theme pour un block et/ou une page html qui le rendre</p>
+        <p>#theme = Un simple theme function/template  qui va prendre toutes les responsabilités pour rendre les éléments sous forme de tableau en incluant ses enfants. Il prédétermine la structure des éléments.</p>
+        <p>Ainsi drupal pourra interpréter et creer tout seul </p>
+
+        <h3>Exemple dans le core/module</h3>
+        <p> Dans le <strong>node.module</strong>  il y a un <strong>hook node_theme</strong> qui retourne un <strong>render_array 'node'</strong>.</p> 
+        <p>Ainsi il y a un <strong>twig associé</strong> qui s'appelle <strong> node.html.twig</strong> en fichier template qui rendra l'affichage de ce node</p>   
+        <img src="images/node_module.png" alt="">
+        <img src="images/node_html_twig.png" alt="">
+
+        <h3>Dans le render Array, hierarchie de containers</h3>
+        <p>On peut creer une hierarchie de div avec des containers qui contiennent les elements </p>
+        <p>Par exemple <strong>$build['wrapper']</strong>  avec le type <strong>'container'</strong> est <strong>une div qui contient</strong> :</p>
+        <p><strong>['wrapper']['nodes']</strong>  qui lui contiendra les nodes</p>
+        <img src="images/$build_container.png" alt="">
+        <p>Cela permet de creer la structure que l'on souhaite pour avoir au final un rendu html tel que</p>
+
+        <pre>
+            div class="NewsList-content-wrapper">
+               div class="Newslist-content-nodes">
+                    -->insertion des valriables de nodes
+            
+        </pre>
+
+        
+        <h4>Voici une liste exhaustive des éléments que l'oon peut entrer dans un render array</h4>
+        <a href="https://api.drupal.org/api/drupal/elements/">Render elements</a>
+        <p>grâce à ce fonctionnement on peut ajouter des librairies et du css directement pour les elements</p>
+        <img src="images/item_list.png" alt="">
+
+        <h3>Exemple</h3> 
+        <h4>Creation d'un tableau avec un foreach sur les nodes</h4>
+        <p>Dans le twig on aura ce type de rendu</p>
+        <img src="images/exemple_twig_list_type.png" alt="">
+        <strong><em>Il manque une image</em></strong> 
+        <p>Dans le code de creation du render array on aura ce type de code</p>
+        <pre>foreach ($nodes as $node) {
+            $items[] = [
+             'attributes' => ['class' => ['NewsList-content-nodes']],
+             'value' => $view_builder->view($node,'teaser')
+            ];
+           }
+           $build['nodes'] = [
+            '#theme' => 'item_list',
+            'items' => $items,
+            'title' => 'mon titre'
+           ];
+        </pre>
+        <h4>visuellement</h4>
+        <img src="images/exemple_render_array_code.png" alt="">
+
+
+        
+
+
+
+    </article>
+    
+
+
+</body>
+</html>

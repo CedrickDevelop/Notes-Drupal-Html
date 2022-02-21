@@ -1,0 +1,9 @@
+.container_schema{
+  width: 100vw;
+  overflow: hidden;
+}
+
+.image_grand_schema {
+
+  object-fit: cover;
+}

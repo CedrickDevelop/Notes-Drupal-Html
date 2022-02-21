@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/19d905bb9a.js" crossorigin="anonymous"></script>
+
+    <title></title>
+</head>
+<body>
+
+    <h1>Le fonctionnement de l'intégration</h1>
+
+    <a href="../../index.html"> <button type="button" class="btn btn-success">Accueil</button></a> 
+
+    <!-- BLOCK -->
+    <article>
+
+      <h2>Installation de node vm</h2> 
+      <a href="https://github.com/nvm-sh/nvm">repo git de node vm</a>
+
+      <h3>Install and update via curl</h3>
+      <p>Node est utilisé pour son npm et installer des dépendances dans le projet</p><br>
+
+      <p><i class="fas fa-laptop-code"></i> Dans le terminal utiliser curl ou wget pour installer, ici on utilise curl</p>
+      <pre>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash</pre>
+
+      <p><i class="fas fa-laptop-code"></i> Mise a jour de la version de nvm = node version manager</p>
+      <pre>node install 14</pre>    
+
+      <p> Avec Drupal, NVM nous servira pour utiliser gulp</p>
+      <p> On va voir le fichier readme de gulp dans custom </p>
+      <pre>/home/ubuntu/sites/cp22_saulnier_cedrick/web/themes/custom/cp22_saulnier_theme/assets/README.md</pre>
+
+      <img src="./images/architecture_assets_gulp.png" alt="">
+
+    </article>
+
+    <br><hr><br>
+    <!-- BLOCK -->
+
+    <article>
+
+
+      <h2>Installation de Gulp</h2> 
+      <p><strong> Gulp est un gestionnaire de paquets et de librairies</strong></p>
+      <p>L'idée est de charger le js pour les pages lorsque l'on en a besoin et optimiser les ressources des sites. Gulp est très bon pour cela (bien mieux que le webpack).</p>
+      
+
+      <p>Dans le terminal ouvrir le dossier <i class="fas fa-folder-open"></i> assets et faire un <i class="fas fa-terminal"></i> npm install</p>
+      <img src="./images/install_npm.png" alt="">
+
+      <p>Dans asset, il y a le fichier <i class="fas fa-folder-open"></i>config.example.json, on le copie et renomme en <i class="fas fa-folder-open"></i>config.json avec la bonne adresse locale</p>
+      <img src="./images/host_config_json.png" alt="">
+
+      <p>Puis installation de gulp en command line</p>
+      <a href="https://gulpjs.com/docs/en/getting-started/quick-start">Gulp site officiel</a>
+      <pre><i class="fas fa-terminal"></i>npm install --global gulp-cli</pre>
+
+      <h3>Les mises à jour adimeo</h3>
+      <ul>
+        <li><p>modification fichier <i class="fas fa-folder-open"></i>sass.js et package.json</p></li>
+        <li><p>suppression du dossier /node_module et reinstallation de npm</p></li>
+        <li><p>installation de sass</p></li>
+        <li><i class="fas fa-terminal"></i><pre>npm install sass</pre></li>
+      </ul> 
+      
+    </article>
+
+    <hr>
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2>GULP Utilisation</h2>  
+
+      <h3>Dans le fichier gulpfile.js on peut voir les diférentes commandes de gulp</h3>
+
+      <p>Pour que gulp soit à l'écoute on lance gulp dans le terminal au niveau du dossier comprenant assets dans le theme</p>
+      <p> Watch tout le scss pour le mettre en css (la base de sass)</p>
+      <pre><strong><i class="fas fa-terminal"></i>  gulp </strong> </pre>  
+      <p> Builder sans watcher</p>
+      <pre><strong><i class="fas fa-terminal"></i>  gulp build</strong> </pre> 
+
+      <h3>Creation scss</h3>
+      <p>On peut modifier le scss directement en ouvrant le fichier <i class="fas fa-folder-open"></i><strong>_global.scss</strong> </p>
+      <p></p>
+
+      <img src="" alt="">
+
+    </article>
+
+    <br><hr><br>
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2>Rappels SCSS</h2>  
+
+      <h3>Dans le fichier cp22_saulnier_theme.librairie.yml</h3>
+      <p>Une librairie est un ensemble de fichiers css et js</p>
+      <img src="./images/librairies_main.png" alt="">
+
+      <p>Dans le fichier theme.info on peut voir comment sont chargées les librairies</p>
+      <img src="./images/librairies_chargement.png" alt="">
+
+    </article>
+
+    <hr>
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2>Les régions</h2>  
+
+      <h3>On verifie les maquettes et les spécisifiactions du projet</h3>
+      <p>On doit considérer des ensembles :</p>
+      <ul>
+        <li><p>On demarre de grands ensembles pour aller vers des petits éléments</p></li>
+        <li><p>les régions sont principalement sur drupal</p></li>
+        <li><p>pour les régions desktop</p>
+          <ul>            
+            <li><p>Header</p></li>
+            <li><p>Fil d'arianne</p></li>
+            <li><p>Main</p></li>
+            <li><p>footer</p></li>
+          </ul>
+        </li>
+        <li><p>pour les régions mobiles</p>
+            <ul>
+              <li><p>Header</p></li>
+              <li><p>Main</p></li>
+              <li><p>footer</p></li>
+            </ul>
+        </li>
+
+      </ul>
+      
+
+      <h3>Modification des régions</h3>
+      <p>dans le fichier <i class="fas fa-folder-open"></i> nom_theme.info.yml</p>
+      <img src="./images/region_info_yml.png" alt="">
+
+      <p>puis modification du <i class="fas fa-folder-open"></i> page.html.twig</p>
+      <img src="./images/page_html_twig.png" alt="">
+
+      <h4>Dans le twig on peut :</h4>
+      <ul>
+        <li><p>setter une class avec : </p><pre>{% set class = 'region-'~region %}</pre></li> 
+        <li><p>ajouter une classe à un élément : </p><pre>{{ attributes.addClass(region) }}></pre></li>
+      </ul>
+
+      <img src="./images/region_html_twig_setter_class.png" alt="">
+
+    </article>
+
+
+    <hr>
+
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2>Les notations dans twig</h2>  
+
+      <h3>Pour les noms de classes</h3>
+      <p>On note d'abord le plus grand élément</p>
+      <p>Si il y a un élément en dessous on le note avec un tiret</p>
+      <img src="./images/nommages_class_twig.png" alt="">
+
+      <h3>Architecture de modification du scss</h3>
+      <p>on doit creer un dossier dans <i class="fas fa-folder-open"></i> entities/nodes/edito/edito.scss --> si le nom de twig est edito</p>
+      <img src="./images/architecture_scss.png" alt="">
+      <p>Pour chaque view mode il y aura un template.</p>
+      <p>Dans l'idée il y aurait une librairie par templates</p>
+
+      <h3>Nomenclatures et poids css</h3>
+      <p>Utilité du système avec les tirets : Dans le css les sélecteurs ont un poids. Dès lors, le système de tirets permet d'anihiler ca et d'être très précis. Le tiret créé un seul ensemble de classe</p>
+      <ul>
+        <li><p>.NodeEdito --> correspond à la class NodeEdito</p></li>
+        <li><p>&-chapo --> indique que l'on rajoute -chapo à .NodeEdito</p></li>
+      </ul>     
+
+      <img src="./images/exemple_scss_classes.png" alt="">
+
+      <h4>Construction du template twig</h4>
+      <p>Le premier element de classe permettra de configurer le groupe d'éléments</p>
+      <p>Lorsque l'on rajoute des variantes d'affichage on creera une 2e classe (les modificateurs)</p>
+      <p>Ex: un block avec image, texte et bouton. Pour la couleur du texte on utilisera des modificateurs</p>
+    
+      <h4>Id vs classes</h4>
+      <p>les id on les utilise peu, seulement pour des éléments ponctuels</p>
+      <p>les classes doivent être de 2 ou 3 par éléments maximum pour ne pas trop surcharger le css</p>
+    
+    </article>
+
+
+    <hr>
+
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2>Configuration du scss</h2>  
+
+      <h3>Correction des bugs d'affichage</h3>
+      <p>Config correction de bugs dans le layout adimeo (src/scss/layout/layout.css)</p>
+      <ul>
+        <li><p>Un minimum de hauteur pour chaque element pour ne pas qu'il y ait de problement avec internet explorer 11</p>
+          <pre>  & > * {
+            min-height: 0.1rem;
+          }</pre>
+        </li>
+        <li><p>On met un flex grow sur le content pour avoir le footer en bas de page</p>
+          <pre>  & > #MainWrapper {
+            flex-grow: 1;
+          }</pre>
+        </li>
+        <li><p>On a la barre de menu pour les admin qui sont adaptés à chaque fenetre</p>
+        <pre>body.adminimal-admin-toolbar {
+        #Page {
+          min-height: calc(100vh - 39px);
+        }
+      
+        &.toolbar-tray-open {
+          #Page {
+            min-height: calc(100vh - 80px);
+          }
+        }
+      }</pre>
+        </li>
+      </ul>
+     
+
+      <h3>Le fichier screen.scss</h3>
+      <p>Les fichiers scss sont importés dans un ordre bien particulier</p>
+      <p>Ca nous montre la structure du scss</p>
+      <img src="./images/screen_scss.png" alt="">
+
+      <p>ca correspond à l'architecture dans le fichier scss</p>
+      <img src="./images/architecture_dossier_import_scss.png" alt="">
+
+      <h3>Outils dans le dossier scss/base</h3>
+      <p>On utilise pas googleFont en link dans le projet, on doit télécharger le dossier googleFont </p>
+      <p>on download notre dossier de fonts, puis on va sur transfonter</p>
+      <p>Transfont est un outil en ligne qui permet d'adapter les fonts à notre besoin, notamment le format en woff</p>
+      <a href="https://transfonter.org/"> transfonter</a>
+      <p>On utilise ces configurations là : </p>
+      <img src="./images/transfonter.png" alt="">
+
+      <p>On convertit nos font de google avec l'outil</p>
+      <p>puis on copie nos font dans src/fonts/</p>
+      <p>on récupère le texte de stylesheet.css que l'on insère dans scss/base/_fontfaces.scss</p>
+
+      <h3>le dossier et fichier scss/helpers</h3>
+      <a href="https://sass-lang.com/guide">voir les descriptions de vraiables etc avec sass</a>
+      <ul>
+        <li><p>variables</p>
+        <span>Pour les pointbreak, c'est l'intégrateur qui devra définir lui-même les points importants</span>
+        <pre>$site-content-max-width: 1380px;</pre> 
+        <span>Ca correspond à la largeur des contenus de la page. Dans la theorie, le texte doit être sur max 800px de large</span>
+        </li>
+        <br>
+
+        <li><p>nesting</p></li>
+        <li><p>partials</p></li>
+        <li><p>modules</p></li>
+        <li><p>mixing</p>
+          <span>très utile pour les media queries</span>
+          <pre>assets/src/scss/helpers/_mixins.scss</pre></li>
+        <img src="./images/mixin_scss.png" alt="">          
+        
+        <li><p>Placeholders</p><br>
+          <span>Ce sont des préconfgurations très faciles à utiliser. On peut les réutiliser rapidement n'importe ou</span>
+        </li>
+        <li><p>extensions et héritage --> il n'est pas recommandé de faire d'extensions car si l'on modifie l'élément il se retrouvera modifié partout</p></li>
+        <li><p>Opérateurs</p></li>
+        <li><p>Les fonctions <a href="https://sass-lang.com/documentation/at-rules/function">@function sass</a> </p></li>
+      </ul>
+
+
+      
+
+    </article>
+
+
+    <br><hr><br>
+
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2>Intégration du template</h2>  
+
+      <h3>On configure le layout (le niveau le plus haut du templating)</h3>
+      <img src="./images/architecture_layout_scss.png" alt="">
+      <p>Dans ces dossiers  on retrouve le fichier layout qui correspond à la configuration de la page en général</p>
+      <br>
+
+      <img src="" alt="">
+
+      <h3>On définit les variables principales</h3>
+      <p>dans le fichier <pre>/assets/src/scss/helpers/_variables.scss</pre></p>
+      <p>Pour la largeur maximum d'un élément il faut bien prendre en compte les paddings : </p>
+      <img src="./images/largeur_ecran_variables.png" alt="">
+
+      <h3>On definit les configurations de theme</h3>
+      <p>dans le fichier <pre>/assets/src/scss/themes/_global.scss</pre></p>
+      <p></p>
+
+      <h3>Placeholders ckeditor</h3>
+      <p> doit etre déclaré dans le fichier theme.info.yml</p>
+      <img src="./images/declaration_placeholder_ckeditor.png" alt="">
+
+      <h4>modifier le css formulaires</h4>
+      <p>pour modifier les elements css du ckeditor (editeur texte riche dans les formulaires) on peut le faire directement dans le fichier _ckeditor.scss</p>
+      <pre>assets/src/scss/helpers/placeholders/_ckeditor.scss</pre>
+      <img src="./images/ckeditor_css.png" alt="">
+      
+      <h4>modifier le rendu du ckeditor</h4>
+      <p>puis on cree un template twig dans les fields pour effectuer les changement créés dans le ckeditor</p>
+      <img src="./images/architecture_ckEditor_rendu.png" alt="">
+      <p>Bien penser à mettre les même noms dans le fichier scss et le template twig comme pour le ckEditor</p>
+      <img src="./images/template_ckEditor_ckeditor_scss.png" alt="">
+
+
+      <h3>Les placeholders communs</h3>
+      <p>On peut les retrouver dans le fichier _common.scss</p>
+      <p>Ce sont les contenus réguliers que j'utilise</p>
+      <p>Les placeholders correspondent à du code css qui s'appliquera à tous les sélecteurs ayant le nom explicité</p>
+      <p>Par exemple chaque classe ayant <pre>siteSizeWrapper</pre> possèdera comme spécificité css :</p>
+      <pre>%_siteSizeWrapper {
+        max-width: $site-content-max-width;
+        margin-left: auto;
+        margin-right: auto;
+      }</pre>
+
+      <h3>Les placeholders pour les fonts</h3>
+      <p>Correspond à toutes les variations de texte que l'on veut appliquer</p>
+      <p>assets/src/scss/helpers/placeholders/_fontVariations.scss</p>
+
+      <img src="./images/placeholders_commons.png" alt="">
+    </article>
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+

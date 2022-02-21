@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/19d905bb9a.js" crossorigin="anonymous"></script>
+
+    <title></title>
+</head>
+<body>
+
+    <h1></h1>
+
+    <a href="../../index.html"> <button type="button" class="btn btn-success">CKEDITOR</button></a> 
+
+    <!-- BLOCK -->
+    <article>
+
+      <h2>Configurations CKEditor</h2> 
+
+      <h3>Modifier le rendu du ckEditor</h3>
+      <p>dans configuration /redaction de contenu/format de texte et editeur</p>
+
+      <p>Si on autorise des éléments dans le ckEditor ca peut etre une faille de sécurité.</p>
+      <p>PAr exemple avec le iframe il y a des grandes failles de sécurité.</p>
+
+      <p>Ainsi on essaie de limiter les possibilité de modification du html par less contributeurs </p>
+
+
+      <h3>Le Html Complet</h3>
+      <h5>Editeur de texte</h5>
+      <p>Il y a la possibilité de changer d'éditeur et de rajouter d'autres éditeurs (avec un plugin par exemple)</p>
+
+      <h5>Barre d'outil</h5>
+      <p>format = balises h2 etc...</p>
+      <p>On peut aussi rajouter ses propres boutons par exemple un element média (mais c'est pas recomandé car ce sera moche...) il est pré&férable de rajouter un paragraph media</p>
+      
+
+      <img src="./images_ckeditor/configuration_ckeditor_editeur_boutons.png" alt="">
+
+      <h5>Paramètre de plugin</h5>
+      <h6>Images</h6>
+      <p>Changer le repertoire des images</p>
+      <p>Modifier la taiolle maximum (taille de contenu)</p>
+      <h6>liste deroulante des styles</h6>
+      <p>On peut ajouter des classes à des elements</p>
+      <pre>a.download-link|Lien de téléchargement</pre>
+      <p>On peut ajouter des liens de telechargement uniquement sur des a</p>
+      <p>type de html.classe|nom pour le contributeur</p>
+
+      <h5>Filtres activés</h5>
+      <p>A cocher imperativement</p>
+      <h6>Limiter les balises HTML autorisées et corriger les fautes de HTML</h6>       
+      <h6>Restreindre les images à ce site</h6>
+      <img src="./images_ckeditor/filtres_activés_config_ckeditor.png" alt="">
+
+      <p>Attention à l'ordre d'affichage des éléments</p>
+      <p>Exemple: on doit afficher les images avant d'y appliqur un correctif</p>
+      <img src="./images_ckeditor/config_ckeditor_ordre_restrictions.png" alt="">
+
+      <h5>Paramètres de filtrage</h5>
+      <p>Dan les paramètres de filtrages bien configurer les elements</p>
+      <p>Integrer types de média</p>
+      <p>visualisation par defaut: pragraph media</p>
+
+      
+
+
+    </article>
+
+    <br><hr><br>
+
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2>Modifier le Css du wysiwyg</h2>  
+
+      <h3>Modification des éléments en front</h3>
+      <p>Pour la modification d'affichage du front de texte-riche ou de rendu du ckeditor on doit le faire dans le fichier scss_ckeditor</p>
+      <p>Pour le rendu du contenu</p>
+
+      <p>pour la modification des alignements etc, on le fera dans le scss _paragraph_wysiwyg...</p>
+      <p></p>
+
+      <img src="" alt="">
+
+    </article>
+
+
+
+
+</body>
+</html>
+
+
+
