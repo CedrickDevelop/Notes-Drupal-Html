@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/19d905bb9a.js" crossorigin="anonymous"></script>
+
+    <title></title>
+</head>
+<body>
+
+    <h1></h1>
+
+    <a href="../../../index.html"> <button type="button" class="btn btn-success">Accueil</button></a> 
+
+    <!-- BLOCK -->
+    <article>
+
+      <h2>Patch recupere en ligne</h2> 
+
+      <h3></h3>
+      <p>rechercher les patchs par rapport au fichier que l'on souhaite</p>
+      <p>dans coimposer.json dans la partie des patch on ajoute le patch en question</p>
+      <img src="./images_patches/patch_composer_json.png" alt="">
+
+      <p>Puis on active le patch avec la console</p>
+      <pre>composer install</pre>
+
+      <p>C'est tout ce qu'il y a faire, le patch est installé et prêt à être utilisé</p>
+      <p></p>
+
+      <img src="" alt="">
+
+
+    </article>
+
+    <br><hr><br>
+
+    <!-- BLOCK -->
+
+    <article>
+
+      <p>Si l'on souhaite modifier rapidement quelque chose pour l'affichage par exemple on peut créer un hook_update </p>
+
+      <h2>Patch perso custom</h2>  
+
+      <h3>On a besoin de git et du depot</h3>
+      <p>On clone le module dans le pc</p>
+      <p>On accès ainsi aux éléments du module</p>
+
+      <img src="./images_patches/clone_module.png" alt="">
+
+      <p>On modifie ce que l'on souhaite modifier dasn les fichiers</p>
+
+      <p>on exporte le module modifié dasn un fichir avec un git diff</p>
+      <img src="./images_patches/git_diff.png" alt="">
+
+      <p>On importe le nouveau module patché dans notre code</p>
+      <p>On insère le patch dans le composer.json </p>
+      <img src="./images_patches/composer_json_patch.png" alt="">
+
+      <p>Pour activer le patch</p>
+      <pre>composer install</pre>
+
+      <p>On upgrade la db </p>
+      <pre>drush updb</pre>
+
+      <p>On met à jourle cache</p>
+      <pre>drush cr</pre>
+      
+
+
+    </article>
+
+    <article>
+
+      <h2>En tant que contributeur</h2>
+      <p>Possibilité d'ajouter son patch dans les drupal.org...</p>
+
+    </article>
+
+
+
+
+</body>
+</html>
+
+
+
