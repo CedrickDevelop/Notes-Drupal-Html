@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/19d905bb9a.js" crossorigin="anonymous"></script>
+
+    <title></title>
+</head>
+<body>
+
+    <h1>Mises à jour de Drupal</h1>
+
+    <a href="../../index.html"> <button type="button" class="btn btn-success">Accueil</button></a> 
+
+    <!-- BLOCK -->
+    <article>
+
+      <h2>MAJ drupal 8 vers drupal 9</h2> 
+
+      <a href="https://akr.adimeo.eu/mise-a-jour-drupal-8-vers-drupal-9">lien AKR pour les mises à jour </a>
+
+      <h3>Les vérifications avant mise a jour</h3>
+      <p>Des éléments du code peuvent être dépréciés ce qui indique que l'on doit faire les mises à jour</p>
+      
+      <h4>Il y a des prérequis</h4>
+      <p>Il faut avoir un php à jour (7.3 minimum) ainsi que les autres composants</p>
+      <p>verifier les verifications dans le docker</p>
+
+      <H4>Module d'aide pour la maj</H4>
+      <a href="https://www.drupal.org/project/upgrade_status/">module : upgrade_status</a>
+      <p>Il va faire un scan de notre drupal et fait un rapport de ce qui change</p>
+      <p>Ce module donne toutes les informations pour savoir si notre upgrade est possible. Si ce n'est pas possible il nous explique pourquoi et propose des patchs en cas de blocage par un module.</p>
+      <p>On peut retrouver les résultats dans Backoofice : Rapports/Upgrade_status</p>
+
+      <img src="" alt="">
+
+
+    </article>
+
+    <br><hr><br>
+
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2></h2>  
+
+      <h3>Drupal core recommended</h3>
+      <p>Ce sont les versions de dépendances (qui seront installées) qui seront les plus récentes possibles compatibles avec les autres dépendances du projet</p>
+      <p>Cela correspond au meilleur ratio : nouveauté de la dépendance, compatibilité avec les autres dépendances</p>
+
+      <p>--> Come cela on a la garantie que tout ce qui installé sera compatible</p>
+
+
+
+      <h3></h3>
+      <pre>composer require 'drupal/core-dev:^9' --dev --update-with-dependencies --no-update</pre>
+      <p>On effectue un composer require avec no-update car on propose à Drupal de faire tout le calcul en amont de l'installation des dépéndances on efffectue le calcul pour ne pas avoir à tout refaire lors d'un conflit sur une installation</p>
+      <img src="" alt="">
+
+    </article>
+
+
+
+
+</body>
+</html>
+
+
+
