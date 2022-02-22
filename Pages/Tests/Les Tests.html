@@ -169,6 +169,25 @@
 
     
     </article>
+    
+    <article>
+
+      <h2>Dans la page de test</h2>
+      <h3>Pas de constructeur --> construction d'un set up</h3>
+      <p>On ne peut poas creer de __construct dans une page de test, pour instancier on passera par un setup</p>
+      <p>Dans ce set up on fait appel au parent pour construire les dépendances</p>
+      <img src="./ les_tests/constructeur_set_up.png" alt="">
+
+      <p>Ici les informations sont, de facon simulées, chargées dans la page de teste pour pouvoir tester les éléments recu (en Api) </p>
+      <p>Ici on set up le parent pour recuperer ses fonctionnalités</p>
+      <p>Puis on genère l'appel à la data access </p>
+      <p>Puis on envoi les infos dans la gateway pour simuler l'appel (cette gateway n'existe que poiur les tests) </p>
+      <p>Et ensuite on transmet le retour gateway au manager pour traiter les données et les tester</p>
+      
+
+
+    
+    </article>
 
 
 
