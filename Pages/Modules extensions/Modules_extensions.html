@@ -108,6 +108,110 @@
 
     </article>
 
+    <article>
+
+      <h2>Search Api</h2>
+      <p>Search api va crowler dans la base de donnée drupal. Il va rechercher sur l'index de recherche et transmettre les informations au front.</p>
+      <p></p>
+
+      <p>Search Api attachements qui peut etre ajouté à search Api permet d'ajouter la lecture de pdf par exemple</p>
+
+      <h3>Installation de search Api</h3>
+      <p>Installation de search_api et de search_api_db</p>
+
+      <h4>Ajouter un serveur</h4>
+      <p>On definit la database grace au module search_api_db puis on definit le nombre de mots (on peut laisser à 1 ou 2 caractères à partir duquel les mots sont indexés)</p>
+      <p>Correspondance avec le debut du mot</p>
+
+      <img src="./images_modules_extensions/config_serveur_search_api.png" alt="">
+
+      <h4>Ajouter un index</h4>
+      <p>Datasources --> Contenu</p>
+      <p>Types(ce sont les bundles) --> tous sauf la page d'accueil</p>
+      <p>Configurer par default tracker --> indexer les plus récents en premier </p>
+      <p>Serveur --> database</p>
+
+      <ul>Options d'indes :
+        <li>Lecture uniquement == c'est en rapport avec les sources externes</li>
+        <li>Indexer immediatement == en fonction du declenchement du cron --> gros site on attend le cron, petit site on indexe immediatement</li>
+        <li>Track les changements --> on le coche</li>
+        <li>taille des lots --> 50  (par defaut)</li>
+      </ul>
+
+
+      <p>Enregistrer et ajouter les champs</p>
+
+      <h4>Modifier les champs, puis ajouter les champs</h4>
+      <p>Des champs de contenu</p>
+      <ul>indexer :
+       <li>Le chapo</li>
+       <li>Pour les paragraphes
+         <ul>
+          <li>Le contenu : pour les paragraphes on ajoute le texte traité (en fait c'est celui formaté)</li>
+          <li>Images : texte alternatif</li>
+          <li>Les liens</li>
+          <li>Les médias</li>
+           <li>Le titre</li>
+         </ul>
+       </li>
+       <li>Taxonomie
+         <ul>
+           <li>Le nom</li>
+         </ul>
+       </li>
+       <li>Le title</li>
+       <li>Le type de contenu</li>
+       <li>Image : alt</li>
+       <li>Ecrit le</li>
+       <li>Ecrit par</li>
+       
+      </ul>
+      <p></p>
+
+
+      <p>Des champs dans le général</p>
+      <p>l'url(search api url)</p>
+      <p>le rendu html du contenu (rendered html output) --> on peut le booster</p>
+      <p>la langue </p>  
+
+      <h5>Pour info :</h5>
+      <p>Chaine de caractere correspond à tous les mots inscrits dans la recherche seront en ET</p>
+      <p>Ex : titi tata toto --> chaine de caractère d'element recherche "titi tata toto"</p>
+      <p>Pour les terms de taxonomie on met chaine de caractère de manière à creer les facettes</p>
+      <img src="./images_modules_extensions/term_taxonomie_search_api.png" alt="">
+
+      <p>Par ailleurs on peut mettre du texte integral ainsi que des chaines de caractères pour le même type d'éléments.</p>
+      <p>Ex: Pour le term de taxonomie on peut ajouter le nom de l'entité en chaine de caractère et en texte integral pour booster la recherche</p>
+
+      <h5>Important</h5>
+      <p>A l'oppose texte integral aura un autre comportement, chaque mot sera dissocié</p>
+      <p>Pour les titres, chapo on doit les booster au max pour qu'ils soient bien referencés </p>
+
+
+      <h4>Les processeurs</h4>
+      <p>entity status</p>
+      <p>filtre html</p>
+      <p>generateur de jetons</p>
+      <p>ignorer la casse</p>
+      <p>mots a exclure</p>
+      <p>surligner</p>
+      <p>transliteration</p>
+
+      <h5>parametre du processeur</h5>
+      <ul>
+        <li>Filtres html --> Enable on all supported fields</li>
+        <li>ignorer la casse --> Enable on all supported fields</li>
+        <li>mots à exclure --> Enable on all supported fields</li>
+        <li>surligner </li>
+        <img src="./images_modules_extensions/highlighted.png" alt="">
+        <li>type specific boosting</li>
+        <img src="./images_modules_extensions/type_specific_boosting.png" alt="">
+      </ul>
+      
+
+
+    </article>
+
 
 
 
