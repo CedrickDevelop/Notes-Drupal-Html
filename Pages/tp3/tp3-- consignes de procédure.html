@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/19d905bb9a.js" crossorigin="anonymous"></script>
+
+    <title></title>
+</head>
+<body>
+
+    <h1></h1>
+
+    <a href="../../../index.html"> <button type="button" class="btn btn-success">Accueil</button></a> 
+
+    <!-- BLOCK -->
+    <h2>Le projet TP3</h2>
+
+    <h3>A revoir  </h3>
+    <p>Les news dans le menu contrib</p>
+    <p>Ouverture dans une nouvelle fenetre</p>
+
+
+    <p>Voir le rabbithole</p>
+
+    
+
+    <ul>
+      <li><p>Creer les classes de récupération de contenu en bdd</p>
+        <ul>
+          <li><p>Manager de news</p></li>
+          <li><p>Manager de edito</p></li>
+          <li><p>Et leurs interfaces</p></li>
+        </ul>
+      </li>   
+      <li><p>Creation des view modes pour chaque contenu</p>
+        <ul>
+          <li><p>Cration de view mode et de pages twig associées</p></li>
+          <li><p>Gestion des vigenttes images, style d'image</p></li>
+        </ul>
+      </li>
+
+      <li><p>Faire le js pour le top menu</p></li>
+      <li><p>Verifier les affichages des menus top et bas de page</p></li>
+      <li><p>Vérifier tous les affichages autres des nodes et taxonomie</p></li>
+      <li><p>S'occuper de l'accessibilité des éléments : images etc...</p></li>
+      <li><p>Vérifier les ouvertures de page et tous les liens</p></li>
+      <li><p>Relire les specs avec le site pour vérifier les fonctionnalités</p></li>
+      <li><p>Faire le dossier readMe du projet avec ouverture du projet et les informations additionnelles</p></li>
+    </ol>
+
+    <!-- *********************  LE CONTENU CODE EN BACK *************************************************** -->
+    <h3>La structure de contenu</h3>
+
+    <p>Chargement des données dans des classes abstraites dans le global</p>
+    <h4>Les contenus présents sur la page</h4>
+    <ul>
+
+      <li><p>les projets (projets en cours ou dans le futur donc date superieur à date en cours + publiés + afficher 1 ou 2</p></li>
+    </ul>
+
+    
+    <h4>Architecture</h4>
+    <p>Gateway abstraite pour nodes qui charge les nodes news, projets</p>
+
+
+    <h4>Les méthodes en gateway nodes</h4>
+    <p>Charger les actualités : publiées + promues en page d'accueil + ordre DESC + Thèmes + images</p>
+    <p>Charger les projets édito : Affiche 1 ou 2 projets en cours, date non terminée, publiés, poids ordre  </p>
+    
+    <h4>Les méthodes en gateway taxo</h4>
+    <p>Charger les partenaires : publiés + poids ordre asc + libellé  </p>
+    <p>Charger les réseaux : publiés + poids ordre asc + libellé + image </p>
+ 
+    <!-- *********************  LE TEMPLATING *************************************************** -->
+    <h3>TEMPLATE</h3>
+
+    <h4>Pages à créer</h4>
+    <p>view mode actualités : page newslist + page news full + page news teaser, page news Teaser Homepage </p>
+    <p>view mode edito : page editoList + page edito + page edito full + page edito teaser +  teaser homepage</p>
+
+
+    <h4>LES TWIGS</h4>
+    <p>Mettre l'image de fond dans une div à placer ensuite dans le template de homepage (avec la onfiguration de positionnement de Adam</p>
+
+
+    <h4>Le Css</h4>
+
+    <p>Mettre de la factorisation dans le css avec des placeholders dynamiques. Exemple une fonction qui v=calcule automatiquement les tailles de margin en fonction des breakpoints de depart et d'arrivée</p>
+      
+
+
+
+    <!-- *********************  LE CONTENU *************************************************** -->
+    <h3>Le contenu de l'accueil</h3>
+    <p>Bien lire la structure de contenu, les libellés des boutons sont adminsitrables</p>
+
+    
+    
+    <!-- *********************  LE HEADER *************************************************** -->
+    <h4>Le menu</h4>
+    <p>les click sur éléments du menu permettent d'accèder à la page en question via une ouverture dans la même fenêtre</p>
+    <p>Mise en place des niveaux 1 et 2</p>
+    <p>pour le visuel aller voir sur https://www.metropolegrandparis.fr/fr</p>
+    <p>transfert burger vers croix avec transition</p>
+    <p>petite fleche qui tourne (rotate) vers le haut --> gérer en js</p>
+    <p>Le menu secondaire qui n'a pas le même rendu visuel que le premier, couleur rouge</p>
+    <p>Tout est en transition lente</p>
+    
+
+    <h4>Le Logo</h4>
+    <p>click sur le logo, réoriente vers la page d'accueil</p>
+
+    <h4>Réseaux sociaux</h4>
+    <p>Facebook, twitter, Instagram, Youtube</p>
+    <p>clic sur pictogramme l'interneaute est redirigé dans un nouvel onglet</p>
+    <p>Attention à l'ordre d'affichage des éléments</p>
+
+    
+    <h4>Menu burger</h4>
+    <p>Gerer la hauteur du menu burger</p>
+    <p>Gerer lorsque la fenetre est modifiée en terme de largeur fermer le menu burger</p>
+    <p>Pour le menu burger regarder ce qu'il se fait sur le site en ligne</p>
+    <p>Attention aux éléments qu'il contient</p>
+
+
+        <!-- *********************  LE CORPS *************************************************** -->
+    <h4>Le chapo</h4>
+    <p>Mettre une logueur maximum de caractères sur les éléments en mode teaser homepage</p>
+
+    <h4>Actualité</h4>
+    <p>Placement de la liste des actualités dans une div position fixe qui se declenche au passage de l'ecran (innerHeight en js)</p>
+    <p>Affichage de 4 actualités, possibilité de promouvoir en page d'accueil dans le back office</p>
+    <p>Si pas d'actualité, les projets prennent toute la largeur, centré si un seule projet</p>
+    <p>Un lien cliquable. Attention 2 types de pages disponibles en display</p>
+    
+
+    <h4>Projets edito</h4>
+    <p>Si 0 actualités ne pas afficher</p>
+    <p>Si actualité vide alors prendre tout le largeur  les projets sont centrés</p>
+
+
+
+
+
+
+  
+ 
+    <!-- *********************  LE FOOTER *************************************************** -->
+    <h3>Le footer</h3>
+
+    <p>Pour le menu footer, attention à l'affichage des fleches laterales, faire un js pour gérer cela</p>
+
+    <h4>Menu pied de page</h4>
+    <p>click sur un lien amène vers page du partenaire dans un nouvel onglet pour externe dans le même onglet pour interne</p>
+    <p>Voir le nombre d'éléments à afficher</p>  
+    
+    <h4>Verifier sur les différents navigateurs : firefox, chrome, mobile</h4>
+    <p>tester toutes les fonctionnalités sur les différents navigateurs</p>
+
+
+
+
+
+
+
+
+        
+       <!-- *********************  ACCESSIIBILITE *************************************************** -->
+       <h3>Verifier l'accessibilité de chaque éléments de la page :</h3>
+       <a href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/methode-rgaa/criteres/">le numerique.gouv</a>
+       <p>balise alt</p>
+       <p>image de decorations ignorées</p>
+
+        <!-- *********************  SI IL RESTE DU TEMPS *************************************************** -->
+    <h3>Avec du temps</h3>
+
+    <p>les metatags</p>
+
+    <h4>Menu partenaires</h4>  
+    <p>Display la page du partenaire ?</p>
+    <p>Ne s'affiche pas sur la page partenaire</p>
+
+    <h4>Espace Presse</h4>
+    <p>Insérer l'espace presse en haut de la page</p>
+    <li>Insérer un fieldformatter pour indiquer la date de debut de l'element</li>
+
+    
+
+
+    <br><hr><br>
+
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2></h2>  
+
+      <h3></h3>
+      <p></p>
+      <p></p>
+
+      <img src="" alt="">
+
+    </article>
+
+
+
+
+</body>
+</html>
+
+
+

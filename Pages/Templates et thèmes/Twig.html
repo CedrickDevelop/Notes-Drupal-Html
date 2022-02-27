@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -21,39 +21,105 @@
 
     <a href="../../index.html"> <button type="button" class="btn btn-success">Accueil</button></a> 
 
-    <!-- BLOCK -->
+
+
+    
+    <h2>Charger des url dans la twig </h2>
+
+    <section>
+
+      <h3>Nom de la page </h3>
+      <p>On peut utiliser les suggestions proposées par Drupal ou choisir le nom que l'on donne à la classe</p>
+
+      <img src="./images_twig/nom_fichier_twig.PNG" alt="">
+
+    </section>
+
+    <section>
+
+      <h2>Pour les boutons en render array</h2>
+
+        <pre>
+
+          if (content.field_button_link) 
+          a href="{ node.field_button_link.uri}}" title="content.field_button_link" target=_blank>
+              span>{ node.field_button_link.title }}/span>
+        /a>
+        endif 
+
+        </pre>
+
+        <h3>Pour les nodes dans les twigs</h3>
+
+        <pre>
+          a class="NodeNewsTeaserHome-link  NodeNewsWrapper" 
+          href="{ path('entity.node.canonical', {'node': node.id}) }}">/a>
+        </pre>
+
+
+        <h3>Pour les terms de taxonomy dans twig</h3>
+
+        <pre>
+          a href="{ path('entity.taxonomy_term.canonical', {'taxonomy_term': node.field_theme.target_id}) }}">{ content.field_theme }}/a>/pre>
+
+    </section>
+
     <article>
 
-      <h2>Nomenclatures des classes construites intégralement</h2>
-      <h4>Niveau 1 : Les containers</h4>
-      <pre>class="NodeWrapper NodeEdito"</pre>
-      <p>On les note avec : "le nom de l'entité + Wrapper"  suivi par "L'entité + le bundle"</p>
+      <h2>Charger des url </h2>
 
-      <h4>Niveau 2 : Le sous_container</h4>
-      <pre>class="NodeEdito-headerWrapper NodeHeader"</pre>
-      <p>On récupère : "L'entité+Bundle" tiret "position+wrapper" suivi par "l'entité+élément" </p>
 
-      <pre>class="NodeEdito-chapoWrapper NodeChapo"</pre>
-      <p>On récupère : "L'entité+Bundle" tiret "élément+wrapper" suivi par "l'entité+élément" </p>
+      <p>Pour les boutons en render array</p>
 
-      <pre>class="NodeEdito-contentWrapper NodeContent"</pre>
-      <p>On récupère : "L'entité+Bundle" tiret "élément+wrapper" suivi par "l'entité+élément" </p>
+      <pre>
 
-      <h4>Niveau 3 : Les éléments</h4>
-      <pre>class="nodeHeader-cover NodeCover"</pre>
-      <p>On note ""entité+élément" tiret"position" suivi par "entité+position"</p>
-      
-      
-      <img src="./images_twig/Exemple_twig_node_edito.PNG" alt="">
-      
+        {% if (content.field_button_link) %}
+        <a href="{{ node.field_button_link.uri}}" title="content.field_button_link" target=_blank>
+            <span>{{ node.field_button_link.title }}</span>
+       </a>
+      {% endif %}
+
+      </pre>
+
+      <p>pour les nodes dans les twigs</p>
+
+      <pre>
+        <a class="NodeNewsTeaserHome-link  NodeNewsWrapper" href="{{ path('entity.node.canonical', {'node': node.id}) }}"></a>
+      </pre>
+
+
+      <p>pour les terms de taxonomy dans twig</p>
+
+      <pre><a href="{{ path('entity.taxonomy_term.canonical', {'taxonomy_term': node.field_theme.target_id}) }}">{{ content.field_theme }}</a></pre>
 
     </article>
 
-    <br><hr><br>
 
-    <!-- BLOCK -->
+  </section>
 
-    <article>
+  <hr>
+
+    <section>
+
+      <h2>Les liens</h2> 
+
+      <h3>Ajouter un lien sur une image</h3>
+      <pre>
+        a href="{{ term.field_link.uri }}" title="{{ "Suivez-nous sur"|t }} {{ term.label }}">
+        {{ source(term.field_icon.value) }}
+      /a>
+    </pre>
+    <img src="./images_astuces/image_lien.png" alt="">
+
+    
+    <h3>Insérer un lien canonique pour nodes dans les pages</h3>  
+    <pre>a href="{{ url('entity.node.canonical', {'node': news.id})}}" >{{ news.label }}</pre>
+
+
+    </section>
+
+    
+    <section>
 
       <h2>Nomenclatures des classes après récupération</h2>  
 
@@ -71,12 +137,58 @@
       <p>Puis dans le twig on récupère le nom de l'élément : "nom de l'élément" tiret "le plus petit ensemble"</p>
       <img src="./images_twig/Exemple_twig_récupéré.PNG" alt="">
 
-      <h3>Nom de la page </h3>
-      <p>On peut utiliser les suggestions proposées par Drupal ou choisir le nom que l'on donne à la classe</p>
 
-      <img src="./images_twig/nom_fichier_twig.PNG" alt="">
+    </section>
 
-    </article>
+    <section>
+
+      <h2>Nomenclatures des classes construites intégralement</h2>
+
+
+      <h3>Exemple du master </h3>
+      
+      <pre>
+        div class="NodeNews-headerWrapper NodeHeader"
+          div class="NodeHeader-cover"
+          h1 class="NodeHeader-title"
+          div class="NodeHeader-date"
+        div class="NodeNews chapo"
+        div class="ParagraphsWrapper NodeNews-content"
+
+     </pre>
+
+      <h3>Niveau 1 : Les containers</h3>
+
+      <pre>class="NodeWrapper NodeEdito"</pre>
+
+      <p>On les note avec : "le nom de l'entité + Wrapper"  suivi par "L'entité + le bundle"</p>
+
+      <h3>Niveau 2 : Le sous_container</h3>
+
+      <pre>class="NodeEdito-headerWrapper NodeHeader"</pre>
+
+      <p>On récupère : "L'entité+Bundle" tiret "position+wrapper" suivi par "l'entité+élément" </p>
+
+      <pre>class="NodeEdito-chapoWrapper NodeChapo"</pre>
+      <p>On récupère : "L'entité+Bundle" tiret "élément+wrapper" suivi par "l'entité+élément" </p>
+
+      <pre>class="NodeEdito-contentWrapper NodeContent"</pre>
+      <p>On récupère : "L'entité+Bundle" tiret "élément+wrapper" suivi par "l'entité+élément" </p>
+
+      <h3>Niveau 3 : Les éléments</h3>
+      <pre>class="nodeHeader-cover NodeCover"</pre>
+      <p>On note ""entité+élément" tiret"position" suivi par "entité+position"</p>
+      
+      
+      <img src="./images_twig/Exemple_twig_node_edito.PNG" alt="">
+      
+
+    </section>
+
+    <br><hr><br>
+
+    <!-- BLOCK -->
+
 
 
 

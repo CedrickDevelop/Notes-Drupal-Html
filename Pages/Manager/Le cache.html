@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../../css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/19d905bb9a.js" crossorigin="anonymous"></script>
+
+    <title></title>
+</head>
+<body>
+
+    <h1>Gestion du cache</h1>
+
+    <a href="../../../index.html"> <button type="button" class="btn btn-success">Accueil</button></a> 
+
+    <!-- BLOCK -->
+    <article>
+
+      <h2>Généralités</h2> 
+
+      <h3>Exemple de mise en cache</h3>
+      <a href="https://www.flocondetoile.fr/blog/cache-example-action-drupal-8">blog flocon d'étoile</a>
+
+      <h4>Les différents caches</h4>
+      <p>2 règles indispensables ->  invalider le cache et nommer les choses</p>
+
+      <h5>Internal Page Cache :</h5>
+      <ul>
+        <li><p>Dans Drupal 8 on peut choisir d’invalider le cache page par page</p></li>
+        <li><p>C’est un module de cache statique par page qui fonctionne uniquement pour les utilisateurs anonymes.</p></li>
+      </ul>
+      
+      <h5>Dynamic page cache :</h5>
+      <ul>
+        <li><p>Il met en cache les pages sans les parties personnalisées et est utile pour tous les utilisateurs.</p></li>
+        <li><p>Il va mettre en cache tout ce qui est commun et statiques pour le reste il créera des placeholders d’attente.</p></li>
+        <li><p>C’est très performant en terme de cache.</p></li>
+      </ul>
+      
+      <h5>Le render caching</h5>
+      <ul>
+        <li><p>En général notre code a pour but de rendre des éléments (blocs, entités et formulaires…) envoyés sous forme de tableau de rendu (RenderArray).</p></li>
+        <li><p>Tous ces tableaux de rendus sont traités et envoyés dans un objet Response (HTML Response en general).</p></li>
+        <li><p>Ca part de l’élément du plus petit à l’élément le plus grand. (cet élément peut être en cache si oui, il le met puis il passe a l’element plus grand jusqu’à la page).</p></li>
+      </ul>
+  
+      <h4>En pratique </h4>
+      <p>Lorsque l’on modifie un node, ca invalide le cache. Ainsi Drupal doit recalculer tout le cache.</p>
+      <p>Ainsi les ressources en cache doivent être grande et utilisent la base de donnée. (ca peut aller jusqu’à 300MO)</p>
+      <p>Il est possible de modifie la taille du cache dans les settings. </p>
+      <p>On peut aussi passer par une Api externe tel que Redis par ex</p>
+
+    </article>
+
+    <br><hr><br>
+
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2>Comment mettre en cache manuellement ?</h2>  
+
+      <h3>3 fonctionnalités possibles à utiliser</h3>
+      <ul>
+        <li><p>Cache id = cid. C’est un élément que l’on définit soit même</p></li>
+        <li><p>Méthode get() pour lire de cache</p></li>
+        <li><p>Méthode set() pour contrôler la durée de vie du cache</p></li>
+      </ul>
+      <p><strong>Le cache id doit être un identifiant unique. (nom_module_example :objet en cache_la langue)</strong></p>
+      <pre>Ex : mon_module_example :cache_example_fr</pre>
+
+      <p>Sources :</p>
+      <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Cache%21CacheBackendInterface.php/interface/CacheBackendInterface/8.2.x"> Le cache interface dans la doc officielle de drupal</a>
+
+    </article>
+    
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2>Procédure d’insertion de cache dans le manager</h2>  
+
+
+      <ol>
+        <li><p></p>On injecte CacheBackendInterface dans le constructeur</p></li>
+        <img src="./images_cache/construct_cache.PNG" alt="">
+        <li><p>On ajoute dans le service</p></li>
+        <img src="./images_cache/service_cache.PNG" alt="">
+        <li><p>On lui définit un $cid (identifiant du cache)</p></li>
+        <li><p>On vérifie si le cache existe déjà et est valide</p>
+          <img src="./images_cache/verid_cache_valide.PNG" alt="">
+          <ul>
+            <li><p>si le cache esxitse déjà, on renvoi juste un tableau de node déjà buildé</p></li>
+            <img src="./images_cache/verif_cache.PNG" alt="">
+            <li><p>sinon on recréé du cache à partir des données importées dans la gateway</p></li>
+            <img src="./images_cache/set_cache.PNG" alt="">
+          </ul>
+        </li>
+        <li><p>Pour setter le cache on lui donne 4 arguments</p>
+          <ul>
+            <li><p>$cid qui est son identifiant unique</p></li>
+            <li><p>$data qui sont les données stockées en base de données: les nodes par ex</p></li>
+            <li><p>L'expiration du cache
+              <ul> 
+                <li><p>CacheBackendInterface::CACHE_PERMANENT qui signifie que le cache est indéfini tant qu’il n’est pas invalidé (constante de valeur -1)</p></li>
+                <li><p>Un timestamp qui indique que le cache sera inavlidé à partir de cette date là</p></li>
+              </ul>
+            </li>
+            <li><p>Le tableau de Tags</p>
+              <ul>
+                <li><p>Si il represente un node, il doit y avoir plusieurs tags : celui de l’auteur ainsi que ceux du node</p></li>
+                <li><p>Les nomenclatures Adimeo : 
+                  <ul>
+                    <li><p>Entite </p><pre>typeEntiteId_list:bundle</pre>--> <pre>['node_list:article']</pre> </li>
+                    <li><p>Liste d'entites</p><pre>typeEntiteId:bundle</pre>--> <pre>['node:article']</pre> </li>
+                    <li><p>Configuration</p><pre>config:nom_de_la_configuratione</pre>--> <pre>['config:article']</pre> </li>
+                  </ul>
+                </li>
+                <li><p>Pour recuperer des caches Tags plusieurs possibilités :</p>
+                  <ul>
+                    <li><pre>$this->cacheBackend->get('cp22_saulnier_edito_cache')->data</pre></li>
+                    <li><pre>$node->getCacheTags()</pre></li>
+                    <li><pre>$user->getCacheTags()</pre></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Puis on build la vue</li>
+        <img src="./images_cache/build_return.PNG" alt="">
+      </ol>
+
+    </article>
+
+    
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2>Les méthodes de cacheBackendInterface</h2>  
+
+      <p>Liens utiles</p>
+      <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Cache%21CacheBackendInterface.php/interface/CacheBackendInterface/8.2.x">Doc officielle drupal : cache Backend</a>
+
+      <h5>Méthode get</h5> 
+      <ul>
+        <li><pre>public function get($cid, $allow_invalid = FALSE);</pre></li>
+        <li><pre>public function getMultiple(&$cids, $allow_invalid = FALSE);</pre></li>
+        <li><pre></pre></li>
+      </ul>
+      <h5>Méthode set</h5> 
+      <ul>
+        <li><pre>public function set($cid, $data, $expire = Cache::PERMANENT, array $tags = []);</pre></li>
+        <li><pre>public function setMultiple(array $items) ;</pre></li>
+      </ul>
+      <h5>Méthode delete</h5> 
+      <ul>
+        <li><pre>public function delete($cid);</pre></li>
+        <li><pre>public function deleteMultiple(array $cids);</pre></li>
+        <li><pre>public function deleteAll();</pre></li>
+      </ul>
+      <h5>Méthode invalidate</h5> 
+      <ul>
+        <li><pre>public function invalidate($cid);</pre></li>
+        <li><pre>public function invalidateMultiple(array $cids);</pre></li>
+        <li><pre>public function invalidateAll();</pre></li>
+      </ul>
+      <h5></h5> 
+      <ul>
+        <li><pre></pre></li>
+        <li><pre></pre></li>
+        <li><pre></pre></li>
+      </ul>
+
+    </article>
+
+    
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2>Invalider du cache : CacheTagsInvalidator</h2>  
+
+      <h3></h3>
+      <p>Le mieux est d’utiliser le cacheTagsInvalidator</p>
+      <p> La méthode <pre>public function invalidateTags(array $tags) {</pre></p>
+      <pre>\Drupal::service('cache_tags.invalidator')-<invalidateTags(['node_list:article'])</pre>  
+
+      <img src="./images_cache/cache_tags.invalidator.PNG" alt="">
+
+    </article>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+

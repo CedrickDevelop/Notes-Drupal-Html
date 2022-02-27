@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../css/style.css">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <script src="https://kit.fontawesome.com/19d905bb9a.js" crossorigin="anonymous"></script>
+
+  <title>Breadcrumb</title>
+</head>
+<body>
+
+  <a href="../../../index.html"> <button type="button" class="btn btn-success">Accueil</button></a>
+  
+  <h1>Breadcrumb</h1>  
+
+  <article>
+    
+    <h2>Introduction</h2>
+    <h3>Les types de Breadcrumb</h3>
+    <ul>
+      <li><strong> Le BreadCrumb est un plugin qui s'implémente sur chaque page</strong>
+      <ul>
+        <li>On doit le définir comme les autres plugin</li>
+        <li>On peut lui importer une logique et des données</li>
+        <li>Il faut le déclarer comme un plugin</li>
+        <li>On peut déclarer et configurer son template</li>
+      </ul></li>
+      <li>On peut utiliser un module contrib </li>
+      <li>On peut configurer le fil d’arianne avec un hook  </li>
+    </ul>
+  
+    <h3>Pour quelle utilité ?</h3>
+    <p>Le fil d’arianne est un block que l’on vient implémenter sur nos pages </p>
+    <p>Chez Adimeo on fait un breadcrumb par module qui s’occupe d’un type de contenu particulier comme cela on peut importer cette classe dans n’importe quel module. </p>
+
+    <p>Drupal a par défaut un fil d’arianne dans le système qui nomme les pages courantes. </p>
+    <p>Pour utiliser notre builder custom on effectue l’injection dans les services. </p>
+  
+    <h3>Comment créer une classe breadcrumb </h3>
+    <strong>
+      <ul>
+        <li>créer une classe : news breacrumb builder </li>
+        <li>implementer : breadcrumb builder interface </li>
+        <li>module : cp22_saulnier_news dans le namespace breadcrumb </li>
+      </ul>      
+    </strong>
+
+    <p><strong> Comme la classe implémente l’interface BreadcrumbBuilder, 2 méthodes sont obligatoires: </strong></p>
+    <h4>Méthode applies()</h4>
+    <p>Permet de définir dans quels cas appeler notre builder de fil d’Ariane, elle retournera <strong>TRUE ou FALSE</strong>  selon le cas. </p>
+    <p>Dans cette méthode  on vérifie la route sur laquelle on se trouve pour pouvoir définir le contexte dans lequel on se trouve. On utilise <strong>route match</strong>  pour cela qui est le seul moyen de savoir ou l’on se trouve. </p>
+    
+    <h4>Méthode build()</h4>
+    
+    <p>Retourne un objet Breadcrumb, c’est notre fil d’Ariane. C’est l’objet même breadcrumb.Ici on construit le retour de son builder </p>
+    
+    <img src="images_breadcrumb_breadcrumb/applies__build_vides.PNG" alt="">
+
+  </article>
+
+  <br><hr><br>
+
+  <article>
+
+    <h2>Le route match</h2>
+
+    <h3>Technique 1 : On verifie le paramètre node pour savoir si il existe :  </h3>
+    <ul>
+      <li>Si il existe on est sur une page de node et on renvoi true </li>
+      <li>si il n’existe pas on est sur une autre page et on renvoi false </li>
+    </ul>
+    <img src="images_breadcrumb/methode_applies.PNG" alt="">
+
+    <h3>Technique 2 : On vérifie l’url de la route </h3>
+    <p>A partir de là on peut savoir ou l’on se situe.</p>
+  </article>
+
+  <br><hr><br>
+  
+  <article>
+
+    <h2>Déclaration de la classe dans les services </h2>
+
+    <h3>Comment retrouver le nom des services du core ?</h3>
+    <pre>/home/ubuntu/sites/cp22_saulnier_cedrick/web/core/core.services.yml </pre>
+
+    <h3>Comment déclarer un breadcrumb dans les services ?</h3>
+    <h4>Insérer le breadcrumb dans le service container</h4>
+    
+      
+    <ol>
+      <li>Avec un nom</li>
+      <li>Avec un nom de class </li>
+      <li>Avec un tags
+        <ul>
+          <li>Cette nomenclature - { } indique que c’est un tableau </li>
+          
+            <h5>BreadCrumb Builder :</h5>
+            <p>Permet d’indiquer à Drupal que notre service déclaré est un breadcrumb builder.</p>
+            <p>Cette déclaration indique que le breadcrumb utilise le breadcrumb interface et qu’il va créer un fil d’arianne. C’est indispensable pour que Drupal puisse l’utiliser en tant que tel</p>
+
+          <li>La priorité est facultative : elle indique à Drupal l'ordre d'utilisation des Breadcrumb </li>
+
+          
+            <h5>Priority :</h5>
+            <p>Indique la priorité pour la méthode applies. Cela lui permet de d’indiquer en cas de conflit (car plusieurs services répondent au critère). Ainsi la priorité la plus haute sera le service utilisé en premier. </p>
+            <p>Plus le numero est haut plus on a la garantie que celui ci passe en premier. </p>
+            <p>Lorsqu’une page s’affiche, Drupal va consulter tous les breadcrumb  possible à charger en les consultants par order de priorité. Lorsqu’il rencontre le breadcrumb qui correspond à ce qu’il recherche, il le charge. </p>
+            <p>Et arrête de chercher d’autres breadcrumb.</p>
+
+        </ul>
+      </li>
+      <li>Des arguments si il y a des injections de dépendance dans le __construct</li>
+    </ol>
+     
+    <img src="images_breadcrumb/service.PNG" alt="">
+  </article>
+
+  <br><hr><br>
+  
+  <article>
+    <h2>Comment placer le breadcrumb ?</h2>
+    <h3>Dans le backOffice on va dans mise en place des block </h3>
+    <img src="images_breadcrumb/backoffice_placement.PNG" alt="">
+
+    <h3>On place le fil d'arianne système</h3>
+    <img src="images_breadcrumb/backoffice_placement.PNG_2" alt="">
+
+    <h3>Pour la visibilité du fil d’arianne système on le met partout ou l’on veut voir apparaître, c'est à dire ne cocher aucune cases</h3>
+
+    <h4>Affichage du breadCrumb partout</h4>
+    <p>Dans une bonne procédure, on laissera le breadcrumb builder faire le chargement des différents breadcrumb. Ainsi on ne coche rien pour l'affichage des pages et à quels endroits</p>
+    <img src="images_breadcrumb/backoffice_placement_config_1.PNG" alt="">
+
+
+
+    
+    <h4>Affichage du breadcrumb sur certaines pages </h4>
+    <p>Cette procédure est utilisée si l'on ne veut pas voir de breadcrumb affiché sur une page. On choisi le breadcrumb système qui sera vide.</p>
+    <p>Cette pratique est un peu du bricolage mais fonctionne </p>
+    <img src="images_breadcrumb/backoffice_placement_config_2.PNG" alt="">
+
+    
+  </article>
+  <br><hr><br>
+
+  <article>
+    <h2 class="procedure">Comment créer la méthode d'affichage ??</h2>
+    <p>Lorsque l’on place notre BreadCrumb on doit vérifier la priorité pour que notre breadcrumb prenne la priorité sur les autres breadcrumb. </p>
+    <q>Avec un ctr + shift + dans le fichier web on peut retrouver les autres breadcrumb. </q>
+
+    <h3>La méthode applies()</h3>
+    <img src="images_breadcrumb/methode_applies.PNG" alt="">
+
+    <q>Si le retour de breadcrumb affiche un erreur il faut travailler sur le applies </q>
+
+    <h4>Définition des paramètres </h4>
+    <p>Avec le paramètre de route_match on récupère les informations dans l’url (comme le get dans le requestStack) </p>
+
+    <ul>
+      <li>→ le get 				récupérera : url_du_site/node/55 </li>
+      <li>→ le getParameter du node 	récupérera : 55  </li>
+    </ul>
+    <br>
+    <pre>$parameters = $route_match->getParameters()->all();</pre>
+    <ul>
+      <li>getParameter()	→ prend un seul paramètre 
+        <ul>
+          <li>par exemple getParameter('node’) → prend un seul paramètre celui du node </li>
+          <li>equivalent de ca ou l’on verifie par la suite le node </li>
+          <li>$parameters = $route_match->getParameters()->all();<br>if(isset($parameters['node']))</li>
+        </ul>
+
+      </li>
+      <li>getParameters() -> prend plusieurs arguments de paramètres</li>
+    </ul>
+
+    <h4>2 méthodes de récupération des paramètres de node</h4>
+    <p>les méthodes avec Raw retourne l’identifiant des paramètres </p>
+    <p>les méthodes sans le raw retourne l’objet, l’entité (ou entitytypemanager → load()) </p>
+    <img src="images_breadcrumb/route_match_getParametre.PNG" alt="">
+
+    <pre>$nid = $route_match→getRawParameter('node');</pre>
+    <pre>$nodeEntity = \Drupal::entityTypeManager()->getStorage('node')->load($nid);</pre>
+
+    <p>Equivalent à :</p>
+
+    <pre>$nodeEntity = $route_match→getParameter('node');</pre>
+    <pre>$nid = nodeEntity→id() </pre>
+
+    <p>Dans l'application, je choisi la methode avec laquelle je recupere le getParameter('node’) pour sélectionner les nodes puis je recupere le type de node. </p> 
+    <ul>
+      <li> Si ce type de node existe et que le nodeType est celui que l’on désire «news» en l’occurence on retourne true </li>
+      <li> Si ce type n’existe pas je retourne false </li>
+    </ul>
+
+    <img src="images_breadcrumb/Methode_applies_getParameter.PNG" alt="">
+
+    <h5>Attention à bien indiquer la condition de vérification Isset ou empty pour éviter que cela crache. </h5>
+    <h5>En effet la verfiifcation sur un element vide ou qui n’existe pas créera un problème. </h5>
+
+    
+  </article>
+  <br><hr><br>
+
+  <article>
+    <h2></h2>
+  </article>
+  <br><hr><br>
+
+  <article>
+    <h2></h2>
+  </article>
+  
+</body>
+</html>
