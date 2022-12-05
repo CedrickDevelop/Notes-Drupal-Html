@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/19d905bb9a.js" crossorigin="anonymous"></script>
+
+    <title></title>
+</head>
+<body>
+
+    <h1> Les formulaires </h1>
+
+
+
+    <a href="../../index.html"> <button type="button" class="btn btn-success">Accueil</button></a> 
+
+
+    {# https://www.youtube.com/watch?v=f7tdb30evUk #}
+
+    <!-- BLOCK -->
+    <article>
+
+      <h2>Les différentes entités ajoutées dans un formulaire</h2>
+      <h3>EntityType :: class</h3> 
+      <ul>
+        <li>'mapped' == on le met à true si l'entite que l'on souhaite utiliser dans le formulaire est référencée dans l'entité du formulaire car symfony ne trouvera pas le getter et le setter. Sinon elle ne l'est pas on met a false
+          -- 'class' == la classe que l'on va utiliser dans cette entité</li>
+        <li>'class' == la classe que l'on va utiliser dans cette entité</li>
+        <li>'choice_label' == le nom de la propriété qui va apparaitre pour le client (par exemple la propriété dui nom)</li>
+        <li>'placeholder' ==  ce qui apparait dans le select</li>
+        <li>'label' == ce qui apparait dans le titre de l'element du formulaire</li>
+      </ul>
+      
+      <h3>ChoiceType :: class</h3> 
+      <ul>
+      </ul>
+
+      <img src="" alt="">
+
+
+    </article>
+
+    <br><hr><br>
+
+    <!-- BLOCK -->
+
+    <article>
+
+      <h2>Ajax dans Les formulaires</h2>  
+      <p> On peut ajouter du javascript sur les formulaires avec l'ecouteur d'évènement addEventListener</p>
+
+      <h3>Associer le formulaire à un eventListener pour avoir du dynamisme dans le formulaire</h3>
+      
+      <h4>On creer la function callback formModifier</h4>
+      <ul>
+        <li>On declare le formModifier qui est la fonction callback qui permet . Avec en parameter:</li>
+        <li>FormInterface qui permet d'aller chercher les méthodes de formulaire ('add' par exemple)</li>
+        <li>les regions le parametere que l'on veut utiliser en l'initialisant à null</li>
+        <pre>$formModifier = function(FormInterface $form, Regions $region = null){</pre>
+        
+        <li>Si on veut ajouter les départemens associés à la region on va aller les chercher en base de données.</li>
+        <li>en ternaire si les régions sont nulles alors on renvoit un tableau vide sinon on renvoit les départements associés en bdd</li>
+        <pre>$departements = (null === $region) ? [] : $region-> getDepartement();</pre>
+        <img src="./imagesFormulaires/appel_function_callback.png" alt="">
+        
+        <li>Puis on ajoute les départements au formulaire grâce à l'entityType</li>
+        <li>On cree les différentes mises en forme que l'on souhaite pour cette entite dans le formulaire</li>
+        <li>class = on choisit la class que l'on souhaite mettre en rapport</li>
+        <li>choices = le nom de la colonne qui nous interresse à récupérer</li>
+        <li>placeholder</li>
+        <li>label</li>
+        <img src="./imagesFormulaires/contenu_function_callback.png" alt="">
+      </ul>
+
+      <p>Pour information : on n'est pas obligé de séparer la fonction callback du reste du developpement, si on l'intègre directement à l'intérieur du builder cela fonctionnera. Mais de cette manière le code est plus propre</p>
+
+      <hr>
+
+      <h4>On cree la fonction add Event</h4>
+      <ul>
+        <li>ici on associe le formulaire à un eventlistener sur le select de 'region'</li>
+        <pre>$builder ->  get('regions')->  addEventListener($builder ->  get('regions')->  addEventListener(</pre>
+        
+        <li>FormEvents c'est l'utilisation des evenement. Ici en postSubmit pour recuperer les informations et les renvoyer en fonction de ce que l'on veut filtrer</li>
+        <pre>FormEvents::POST_SUBMIT,</pre>
+        
+        
+        <li>on déclare la fonction qui sera exécutée ave le form Event qui modifiera le formulaire. On utilise une variable qui est une fonction de callback que l'on creera par la suite</li>
+        <pre>function(formEvent $event) use ($formModifier) {</pre>
+
+        <li>On recupere la region qui est tapée par le client. En utilisant les variables du formulaire </li>
+        <pre>$region = $event-> getForm()-> getData();</pre>
+        
+        <li>On appelle le formModifier avec en premier parametre le formulaire dans lequel on va allaer chercher region. Region etant dans le formulaire on va donc le chercher dans le parent. En deuxieeme paramtere on va chercher la region</li>
+        <pre>$formModifier($event-> getForm()-> getParent), $region)</pre>
+      </ul>
+
+      <img src="./imagesFormulaires/builder.png" alt="">
+      
+      <h4>Pour que cela fonctionne il faut ajouter du javascript</h4>
+      <h4>Ajouter l'appel du javascript dans la page twig ou le formulaire est appele</h4>
+      <ul>
+        <li>window.onload permet d'attendre que le dom soit chargé avant de lancer le javascript</li>
+        <li>avec le query selector on recupere le nom du champ de formulaire</li>
+        <li>on ajoute un event listener sur l'element pour saisir lorsque'il y aura un changeemnt</li>
+        
+        <li>On recuperer le formulaire complet pour faire un envoi ajax sur les action du formulaire. Closest est une fonction qui permet d'aller chercher la balise form la plus proche de son parent  </li>
+        <img src="./imagesFormulaires/ajout_javascript_template.png" alt="">
+        
+        <li> dans le data on va ecrire les données que l'on envoi en fonction du name du select dans le formulaire + l'id de l'éléménet récupéré</li>
+        <li>avec le fetch on envoi en ajax au formulaire et à son action  </li>
+        <pre>fetch(form.action, </pre>
+        
+        <li>Puis on ajoute des options au fetch</li>
+        <li>1. la methode (post ou get)</li>
+        <li>2. dans le body on envoi la data</li>
+        <li>3. on envoi le headers (content-type). Ici c'est un formulaire encodé avec le charset utf8</li>
+        <li>Cela permet de faire partir une requete en post directement pour recuperer les informations que l'on souhaite</li>
+        <li>Avec ce type de fetch on recoit directement la page (lorsque l'on verifie avec l'inspecteur (calibré sur xhr)</li>
+        
+        <li>Puis on recupere la reponse que l'on traite en texte</li>
+        <li>Puis on fait une nouvelle promesse permettant d'avoir le html avec la nouvelle réponse</li>
+        <img src="./imagesFormulaires/ajout_fetch_javascript_template.png" alt="">
+        <li>IL Y A UNE ERREUR DANS L'IMAGE : 'Headers'
+      </ul>
+      
+
+    </article>
+
+    
+
+    <article>
+    </article>
+
+
+
+
+</body>
+</html>
+
+
+
