@@ -23,8 +23,9 @@
 
     <a href="../../index.html"> <button type="button" class="btn btn-success">Accueil</button></a> 
 
-
-    {# https://www.youtube.com/watch?v=f7tdb30evUk #}
+    <br>
+    <br>
+    <a href="https://www.youtube.com/watch?v=f7tdb30evUk"> Lien du Tuto : 24 - Les formulaires dynamiques et le CollectionType dans un projet Symfony</a>  
 
     <!-- BLOCK -->
     <article>
@@ -70,7 +71,7 @@
         <li>Si on veut ajouter les départemens associés à la region on va aller les chercher en base de données.</li>
         <li>en ternaire si les régions sont nulles alors on renvoit un tableau vide sinon on renvoit les départements associés en bdd</li>
         <pre>$departements = (null === $region) ? [] : $region-> getDepartement();</pre>
-        <img src="./imagesFormulaires/appel_function_callback.png" alt="">
+        <img src="./imagesFormulaires/ajaxFormulaire__appel_function_callback.png" alt="">
         
         <li>Puis on ajoute les départements au formulaire grâce à l'entityType</li>
         <li>On cree les différentes mises en forme que l'on souhaite pour cette entite dans le formulaire</li>
@@ -104,7 +105,7 @@
         <pre>$formModifier($event-> getForm()-> getParent), $region)</pre>
       </ul>
 
-      <img src="./imagesFormulaires/builder.png" alt="">
+      <img src="./imagesFormulaires/ajaxFormulaire__builder.png" alt="">
       
       <h4>Pour que cela fonctionne il faut ajouter du javascript</h4>
       <h4>Ajouter l'appel du javascript dans la page twig ou le formulaire est appele</h4>
@@ -114,7 +115,7 @@
         <li>on ajoute un event listener sur l'element pour saisir lorsque'il y aura un changeemnt</li>
         
         <li>On recuperer le formulaire complet pour faire un envoi ajax sur les action du formulaire. Closest est une fonction qui permet d'aller chercher la balise form la plus proche de son parent  </li>
-        <img src="./imagesFormulaires/ajout_javascript_template.png" alt="">
+        <img src="./imagesFormulaires/ajaxFormulaire__ajout_javascript_template.png" alt="">
         
         <li> dans le data on va ecrire les données que l'on envoi en fonction du name du select dans le formulaire + l'id de l'éléménet récupéré</li>
         <li>avec le fetch on envoi en ajax au formulaire et à son action  </li>
@@ -129,16 +130,106 @@
         
         <li>Puis on recupere la reponse que l'on traite en texte</li>
         <li>Puis on fait une nouvelle promesse permettant d'avoir le html avec la nouvelle réponse</li>
-        <img src="./imagesFormulaires/ajout_fetch_javascript_template.png" alt="">
+        <img src="./imagesFormulaires/ajaxFormulaire__ajout_fetch_javascript_template.png" alt="">
         <li>IL Y A UNE ERREUR DANS L'IMAGE : 'Headers'
+          
+        <li>On cree un element html dans lequel on insère l'html récupéré du ajout_fetch_javascript_template</li> 
+        <li>Ce qui nous permet de récupérer uniquement le select que l'on souhaite. Ici en l'occurence celui des départements</li>
+        <li>Cela permet ainsi de remplacer le select par le nouveau select (récupéré dans le html ) <strong>et remplacer l'ancien select </strong></li>
+        <li>Puis on termine par récupérer les erreurs si il y en a </li>
+        <img src="./imagesFormulaires/ajaxFormulaire__code_javascript_template.png" alt="">
+        
+        
+        
       </ul>
       
-
+      
     </article>
-
     
-
+    
+    
     <article>
+      
+      <h2>Creation de sous formulaire Collection Type dans un formulaire</h2>  
+      <p>Permet d'insérer un formulaire référence d'une autre entité</p>
+      
+      <h3>Creation du formulaire dans le formType</h3>
+      <ul>        
+        <li>'entry_type' = on charge le sousformulaire</li>
+        <li>'label' = titre du formulaire</li>
+        <li>'entry_options' = on choisit les éléments que l'on veut récupérer du sous formulaire. En l'occurence ici on ne prend pas les labels </li>
+        <li>'allow_add' =  permet de creer de nouvelles entrées</li>
+        <li>'allow_delete' = permet de supprimer des éléments</li>
+        <li>'by_reference' = 
+          <ul>
+            <li>si true on va chercher dans l'entité chargé (en sous formulaire) son get ou son set</li>
+            <li>si false on va chercher dans l'entité chargé (en sous formulaire) son add. Ici on charge cette fonction pour ajouter un élémnets</li>
+          </ul>  
+        </li>
+      </ul>
+      
+      <img src="./imagesFormulaires/sousFormulaire__construction_formulaire_collection_type.png" alt="">
+      
+      <h3>Le sous formulaire peut etre un formType de base sans particularité</h3>
+      <img src="./imagesFormulaires/sousFormulaire__formType_sous_formulaire.png" alt="">
+
+
+      <h3>On ajoute le traitement dans le controleur pour persister les données</h3>
+      <img src="./imagesFormulaires/sousFormulaire__Creation_controller.png" alt="">
+      
+      
+      <h3>Création du formulaire Twig</h3>
+      <p>Le code permettrad'afficher le contenu dans le formulaire</p>
+      
+      <li>Découpage du formulaire avec le form_strat et form_end pour avoir le controle sur les éléments</li>
+      <li>ajout des lignes avec les form_row</li>
+      
+      <li>Création d'une div avec les data prototype = creation d'un modele de formulaire pour les entités du sous formulaire</li>
+      <pre>data-prototype="{{ form_row(form.departements.vars.prototype) }}"</pre>
+      <li>Cela cree un modele html et lui ajoute un filtre twig pour recuperer les attributs html</li>
+      
+      <li>On ajoute ainsi un exemplaire du sous formulaire</li>
+      <pre>{{ form_row(form.departements) }}</pre>
+      <img src="./imagesFormulaires/sousFormulaire__Code_formulaire_twig.png" alt="">
+      
+      
+      <h3>Creation du javascript pour le template pour que le formulaire s'afffiche</h3>
+      <li>On declare les variable du formulaire, avec le window.onload on attend que le dom soit chargé</li>
+      <li>On recupere les balises de la collection, la collection de fomulaire c'est à dire la div complète</li>
+      <li>Puis onrécupere la span qui se trouve dans la collection</li>
+      
+      <li>On cree le bouton d'ajout en javascript. Auquel on ajoute des propriétés : une classe et du textee</li>
+      <li>On intègre le bouton dans la span</li>
+      <img src="./imagesFormulaires/sousFormulaire__javascript_formulaire_template.png" alt="">
+      
+      <h3>Ajout du listener sur le bouton</h3>
+      <li>Avant d'ajouter des éléments, on initialise le nombre d'input qu'il y a dans le formulaire collection. </li>
+      <pre>collection.dataset.index = collection.querySelectorAll("input").length</pre>
+      <li>On ajoute un addEventlistener au click qui déclenche l'action du bouton : ajouter un element div et un nouveau bouton ajouter</li>
+      <img src="./imagesFormulaires/sousFormulaire__Code_javascript_formulaire_template_2.png" alt="">
+      
+      <h3>Creation de la fonction lors du click sur ajout</h3>
+      <h4>On n'est pas obligé de passer la collection en paramatre car c'est deja une variable globale</h4>
+      <li>creation de la variable prototype dans laquelle on ecrit la div complete d'un modele du sous-formulaire</li>
+      <li>creation de la variable de l'index pour recuperer l'index de la collection</li>
+      <li>Dans le prototype on remplace tous les __name__ par l'index. le g permet d'acceder à tous les minuscules ou majuscules</li>
+      <li>On cree une nouvelle balise html dans laquelle on ajoute le prototype (nouveau formulaire) qui permet d'aller chercheer la div du form</li>
+      <p>La difference entre prototype et le newForm : prototype est un texte et newForm est un objet du DOM</p>
+      <img src="./imagesFormulaires/sousFormulaire__code_javascript_creation_bouton.png" alt="">
+      
+      <li>Grace au newForm on peut creer un bouton supprimer pour enlever un élément : boutonSuppr</li>
+      <li>On ajoute un type au bouton, une classe et un texte <strong> et un id </strong>(pour effectuer l'action sur le bon element)</li>
+      <li>On ajoute le bouton dans le newForm</li>
+      <li>On incrément l'index</li>
+      <li>On va chercher le bouton  ajout pour pouvoir inserer le bouton ajout après le formulaire</li>
+      <li>On cree l'ecoute de l'evenement de suppression </li>
+      <li>On supprimer l'element précédent (le sous-formulaire) en supprimant le parent donc le sous-formulaire</li>
+      <img src="./imagesFormulaires/sousFormulaire__code_javascript_creation_bouton2.png" alt="">
+      
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
     </article>
 
 
